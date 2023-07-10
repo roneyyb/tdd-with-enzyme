@@ -34,7 +34,12 @@ describe('CarouselButton', () => {
 describe('CarouselSlide', () => {
     let wrapper;
     beforeEach(() => {
-        wrapper = shallow(<CarouselSlide />);
+        wrapper = shallow(
+            <CarouselSlide
+                imgUrl='https://example.com/default.jpg'
+                description='Default test image'
+            />
+        );
     });
     it('renders a <figure>', () => {
         expect(wrapper.type()).toBe('figure');
@@ -61,5 +66,14 @@ describe('CarouselSlide', () => {
             `${description} ${attribution}`
         );
         expect(wrapper.find('figcaption strong').text()).toBe(description);
+    });
+    it('passes other props to the figure', () => {
+        const onClick = () => {};
+        const className = 'my-carousel-button';
+        const dataAction = 'prev';
+        wrapper.setProps({ onClick, className, dataAction: dataAction }); // 1
+        expect(wrapper.prop('onClick')).toBe(onClick);
+        expect(wrapper.prop('className')).toBe(className);
+        expect(wrapper.prop('data-action')).toBe(dataAction);
     });
 });
