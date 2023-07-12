@@ -1,5 +1,4 @@
 module.exports = {
-    env: {
-        browser: true,
-    },
+    plugins: ['jest'],
+    extends: ['plugin:jest/recommended'],
 };
