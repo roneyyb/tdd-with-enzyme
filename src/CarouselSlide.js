@@ -14,13 +14,14 @@ const Img = styled.img`
 
 const CarouselSlide = ({
   imgUrl,
+  imgHeight,
   description,
   attribution,
   dataAction,
   ...rest
 }) => (
   <figure {...rest} data-action={dataAction}>
-    <Img imageHeight={500} src={imgUrl} />
+    <Img imageHeight={imgHeight} src={imgUrl} />
     <figcaption>
       <strong>{description}</strong> {attribution}
     </figcaption>
@@ -28,9 +29,14 @@ const CarouselSlide = ({
 );
 
 CarouselSlide.propTypes = {
+  imgHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // 2
   imgUrl: PropTypes.string.isRequired,
   description: PropTypes.node.isRequired,
   attribution: PropTypes.node,
 };
 
+CarouselSlide.defaultProps = {
+  // 3
+  imgHeight: 500,
+};
 export default CarouselSlide;
