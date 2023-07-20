@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-const Img = styled.img`
+export const Img = styled.img`
   object-fit: contain;
   width: 100%;
 
   height: ${(props) =>
-    typeof props.imageHeight === "number"
+    typeof props.imageHeight === 'number'
       ? `${props.imageHeight}px`
       : props.imageHeight};
 `;
@@ -29,6 +29,7 @@ const CarouselSlide = ({
 );
 
 CarouselSlide.propTypes = {
+  Img: PropTypes.elementType,
   imgHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // 2
   imgUrl: PropTypes.string.isRequired,
   description: PropTypes.node.isRequired,
@@ -38,5 +39,6 @@ CarouselSlide.propTypes = {
 CarouselSlide.defaultProps = {
   // 3
   imgHeight: 500,
+  Img: Img,
 };
 export default CarouselSlide;

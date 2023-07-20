@@ -1,7 +1,7 @@
-import React from "react";
-import CarouselButton from "./CarouselButton";
-import CarouselSlide from "./CarouselSlide";
-import PropTypes from "prop-types";
+import React from 'react';
+import CarouselButton from './CarouselButton';
+import CarouselSlide from './CarouselSlide';
+import PropTypes from 'prop-types';
 
 class Carousel extends React.PureComponent {
   static propTypes = {
@@ -32,18 +32,18 @@ class Carousel extends React.PureComponent {
 
   render() {
     return (
-      <>
-        <CarouselButton onClick={this.onClickPrevHandle} dataAction={"prev"}>
+      <div>
+        <CarouselButton onClick={this.onClickPrevHandle} dataAction={'prev'}>
           Prev
         </CarouselButton>
         <CarouselSlide
           imgHeight={this.props.defaultImgHeight}
           {...this.props.slides[this.state.currentIndex]}
         />
-        <CarouselButton onClick={this.onClickNextHandle} dataAction={"next"}>
+        <CarouselButton onClick={this.onClickNextHandle} dataAction={'next'}>
           Next
         </CarouselButton>
-      </>
+      </div>
     );
   }
 }
