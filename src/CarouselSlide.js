@@ -5,11 +5,10 @@ import styled from 'styled-components';
 export const Img = styled.img`
   object-fit: contain;
   width: 100%;
-
   height: ${(props) =>
-    typeof props.imageHeight === 'number'
-      ? `${props.imageHeight}px`
-      : props.imageHeight};
+    typeof props.imgHeight === 'number'
+      ? `${props.imgHeight}px`
+      : props.imgHeight};
 `;
 
 const CarouselSlide = ({
@@ -18,10 +17,11 @@ const CarouselSlide = ({
   description,
   attribution,
   dataAction,
+  Img,
   ...rest
 }) => (
   <figure {...rest} data-action={dataAction}>
-    <Img imageHeight={imgHeight} src={imgUrl} />
+    <Img imgHeight={imgHeight} src={imgUrl} />
     <figcaption>
       <strong>{description}</strong> {attribution}
     </figcaption>
@@ -34,6 +34,7 @@ CarouselSlide.propTypes = {
   imgUrl: PropTypes.string.isRequired,
   description: PropTypes.node.isRequired,
   attribution: PropTypes.node,
+  dataAction: PropTypes.string,
 };
 
 CarouselSlide.defaultProps = {
