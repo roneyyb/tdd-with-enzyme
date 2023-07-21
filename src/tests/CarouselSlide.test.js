@@ -61,4 +61,15 @@ describe('Img', () => {
   it('should return an img component with src props', () => {
     expect(mounted.containsMatchingElement(<img src={imgUrl} />)).toBe(true);
   });
+
+  it('should have the static styles', () => {
+    expect(mounted).toHaveStyleRule('width', '100%');
+    expect(mounted).toHaveStyleRule('object-fit', 'cover');
+  });
+
+  it('uses imageHeight as styled user property', () => {
+    expect(mounted).toHaveStyleRule('height', '500px');
+    mounted.setProps({ imgHeight: 'calc(100vh-100px)' });
+    expect(mounted).toHaveStyleRule('height', 'calc(100vh-100px)');
+  });
 });
