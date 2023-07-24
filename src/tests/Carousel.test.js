@@ -104,14 +104,15 @@ describe('Carousel', () => {
     // expect(wrapper.prop('slides')).to(slides);
     let slideProps;
     wrapper.setState({ currentIndex: 0 }); // 3
+
     slideProps = wrapper.find(CarouselSlide).props();
 
+    //    console.log('slide props', slideProps);
     expect(slideProps).toEqual({ ...CarouselSlide.defaultProps, ...slides[0] });
     wrapper.setState({ currentIndex: 1 }); // 3
     slideProps = wrapper.find(CarouselSlide).props();
     expect(slideProps).toEqual({ ...CarouselSlide.defaultProps, ...slides[1] });
   });
-
   it('passes defaultImg and defaultImgHeight to the CarouselSlide', () => {
     const defaultImg = () => 'test';
     const defaultImgHeight = 1234;
