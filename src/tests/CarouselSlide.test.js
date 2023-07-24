@@ -48,6 +48,15 @@ describe('CarouselSlide', () => {
     expect(wrapper.prop('className')).toBe(className);
     expect(wrapper.prop('data-action')).toBe(dataAction);
   });
+
+  it('renders correctly', () => {
+    wrapper.setProps({
+      description: 'Description',
+      attribution: 'Attribution',
+    });
+
+    expect(wrapper).toMatchSnapshot();
+  });
 });
 
 describe('Img', () => {
@@ -63,9 +72,13 @@ describe('Img', () => {
     expect(mounted.containsMatchingElement(<img src={imgUrl} />)).toBe(true);
   });
 
+  it('renders correctly', () => {
+    expect(mounted.find('img')).toMatchSnapshot();
+  });
+
   it('should have the static styles', () => {
     expect(mounted).toHaveStyleRule('width', '100%');
-    expect(mounted).toHaveStyleRule('object-fit', 'contain');
+    expect(mounted).toHaveStyleRule('object-fit', 'cover');
   });
 
   it('uses imageHeight as styled user property', () => {

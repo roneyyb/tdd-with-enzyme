@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export const Img = styled.img`
-  object-fit: contain;
+  object-fit: cover;
   width: 100%;
   height: ${(props) =>
     typeof props.imgHeight === 'number'
