@@ -1,10 +1,9 @@
 import { shallow } from 'enzyme/build';
 import React from 'react';
-import Carousel from '../Carousel';
+import Carousel, { Carousel as CoreCarousel } from '../Carousel';
 import CarouselSlide from '../CarouselSlide';
 
 describe('Carousel', () => {
-  let wrapper;
   const slides = [
     {
       imgUrl: 'https://example.com/slide1.png',
@@ -23,15 +22,23 @@ describe('Carousel', () => {
     },
   ];
 
+  const slideIndexDecrement = jest.fn(); // 1
+  const slideIndexIncrement = jest.fn();
+  let wrapper;
+
   beforeEach(() => {
-    wrapper = shallow(<Carousel slides={slides} />);
-  });
-  it('renders a div component', () => {
-    expect(wrapper.type()).toBe('div');
+    wrapper = shallow(
+      <CoreCarousel
+        slides={slides}
+        slideIndex={0}
+        slideIndexDecrement={slideIndexDecrement}
+        slideIndexIncrement={slideIndexIncrement}
+      />
+    );
   });
 
-  it('check current index', () => {
-    expect(wrapper.state('currentIndex')).toBe(0);
+  it('renders a div component', () => {
+    expect(wrapper.type()).toBe('div');
   });
 
   it('render a CarouselButton labeled Prev', () => {
@@ -51,65 +58,60 @@ describe('Carousel', () => {
     ).toBe('Next');
   });
 
-  it('decreases currentIndex when Prev button is clicked', () => {
-    wrapper.setState({ currentIndex: 1 });
+  it('decrements `slideIndex` when Prev is clicked', () => {
     wrapper.find('[dataAction="prev"]').simulate('click');
-    expect(wrapper.state('currentIndex')).toBe(0);
-    wrapper.find('[dataAction="prev"]').simulate('click');
-    expect(wrapper.state('currentIndex')).toBe(2);
+    expect(slideIndexDecrement).toHaveBeenCalledWith(slides.length); // 2
   });
-  it('increases currentIndex when button is clicked', () => {
-    wrapper.setState({ currentIndex: 1 });
+
+  it('increments `slideIndex` when Next is clicked', () => {
     wrapper.find('[dataAction="next"]').simulate('click');
-    expect(wrapper.state('currentIndex')).toBe(2);
-    wrapper.find('[dataAction="next"]').simulate('click');
-    expect(wrapper.state('currentIndex')).toBe(0);
+    expect(slideIndexIncrement).toHaveBeenCalledWith(slides.length);
   });
 
   describe('with a middle slide selected', () => {
     // 1
     beforeEach(() => {
-      wrapper.setState({ currentIndex: 1 });
+      wrapper.setState({ slideIndex: 1 });
     });
 
-    it('decrements `currentIndex` when Prev is clicked', () => {
+    it('decrements `slideIndex` when Prev is clicked', () => {
       wrapper.find('[dataAction="prev"]').simulate('click');
-      expect(wrapper.state('currentIndex')).toBe(0);
+      expect(slideIndexDecrement).toHaveBeenCalledWith(slides.length);
     });
 
-    it('increments `currentIndex` when Next is clicked', () => {
-      wrapper.setState({ currentIndex: 1 });
+    it('increments `slideIndex` when Next is clicked', () => {
+      wrapper.setProps({ slideIndex: 1 });
       wrapper.find('[dataAction="next"]').simulate('click');
-      expect(wrapper.state('currentIndex')).toBe(2);
+      expect(slideIndexIncrement).toHaveBeenCalledWith(slides.length);
     });
   });
 
   describe('with the first slide selected', () => {
-    it('wraps `currentIndex` to the max value when Prev is clicked', () => {
-      wrapper.setState({ currentIndex: 0 });
+    it('wraps `slideIndex` to the max value when Prev is clicked', () => {
+      wrapper.setProps({ slideIndex: 0 });
       wrapper.find('[dataAction="prev"]').simulate('click');
-      expect(wrapper.state('currentIndex')).toBe(slides.length - 1);
+      expect(slideIndexDecrement).toHaveBeenCalledWith(slides.length);
     });
   });
 
   describe('with the last slide selected', () => {
-    it('wraps `currentIndex` to the min value when Next is clicked', () => {
-      wrapper.setState({ currentIndex: slides.length - 1 });
+    it('wraps `slideIndex` to the min value when Next is clicked', () => {
+      wrapper.setProps({ slideIndex: slides.length - 1 });
       wrapper.find('[dataAction="next"]').simulate('click');
-      expect(wrapper.state('currentIndex')).toBe(0);
+      expect(slideIndexIncrement).toHaveBeenCalledWith(slides.length);
     });
   });
 
   it('check slide rendering', () => {
     // expect(wrapper.prop('slides')).to(slides);
     let slideProps;
-    wrapper.setState({ currentIndex: 0 }); // 3
+    wrapper.setProps({ slideIndex: 0 }); // 3
 
     slideProps = wrapper.find(CarouselSlide).props();
 
     //    console.log('slide props', slideProps);
     expect(slideProps).toEqual({ ...CarouselSlide.defaultProps, ...slides[0] });
-    wrapper.setState({ currentIndex: 1 }); // 3
+    wrapper.setProps({ slideIndex: 1 }); // 3
     slideProps = wrapper.find(CarouselSlide).props();
     expect(slideProps).toEqual({ ...CarouselSlide.defaultProps, ...slides[1] });
   });
@@ -129,5 +131,24 @@ describe('Carousel', () => {
     wrapper.setProps({ slides: [{ ...slides[0], Img, imgHeight }] });
     expect(wrapper.find(CarouselSlide).prop('Img')).toBe(Img);
     expect(wrapper.find(CarouselSlide).prop('imgHeight')).toBe(imgHeight);
+  });
+
+  describe('component with HOC', () => {
+    // Tests against Carousel will go here
+    beforeEach(() => {
+      wrapper = shallow(<Carousel slides={slides} />);
+    });
+
+    it('sets slideIndex={0} on the core component', () => {
+      expect(wrapper.find(CoreCarousel).prop('slideIndex')).toBe(0);
+    });
+
+    it('passes `slides` down to the core component', () => {
+      expect(wrapper.find(CoreCarousel).prop('slides')).toBe(slides);
+    });
+  });
+
+  describe('core component', () => {
+    // Tests against CoreCarousel will go here
   });
 });
