@@ -31,15 +31,24 @@ export class Carousel extends React.PureComponent {
   };
 
   render() {
+    const {
+      defaultImg,
+      defaultImgHeight,
+      slideIndex,
+      slideIndexDecrement: _slideIndexDecrement, // 1
+      slideIndexIncrement: _slideIndexIncrement,
+      slides,
+      ...rest
+    } = this.props;
     return (
-      <div>
+      <div {...rest}>
         <CarouselButton onClick={this.onClickPrevHandle} dataAction={'prev'}>
           Prev
         </CarouselButton>
         <CarouselSlide
-          imgHeight={this.props.defaultImgHeight}
-          Img={this.props.defaultImg}
-          {...this.props.slides[this.props.slideIndex]}
+          imgHeight={defaultImgHeight}
+          Img={defaultImg}
+          {...slides[slideIndex]}
         />
         <CarouselButton onClick={this.onClickNextHandle} dataAction={'next'}>
           Next
