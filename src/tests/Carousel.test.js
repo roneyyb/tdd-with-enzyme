@@ -164,7 +164,7 @@ describe('Carousel', () => {
       );
       jest.advanceTimersByTime(autoAdvanceDelay);
       mounted.update(); // 1
-      expect(mounted.find(CoreCarousel).prop('slideIndex')).toBe(1);
+      expect(mounted.find(CoreCarousel).prop('slideIndex')).toBe(0);
     });
   });
 

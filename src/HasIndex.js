@@ -29,7 +29,6 @@ export default (Component, indexPropName) => {
         props[indexPropName] != null &&
         props[indexPropName] !== state.index
       ) {
-        console.log('Running', props[indexPropName], state.index);
         return { index: props[indexPropName] };
       }
       return null;
