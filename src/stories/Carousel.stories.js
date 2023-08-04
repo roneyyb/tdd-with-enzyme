@@ -1,5 +1,6 @@
 import Carousel from '../Carousel';
 import slides from '../../example/slides';
+import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Example/Carousel',
@@ -18,7 +19,7 @@ export default {
 
 export const Carousel1 = {
   args: {
-    slides: slides,
+    slides: slides.slice(2),
   },
 };
 // storiesOf('Carousel', module).add('default', () => (

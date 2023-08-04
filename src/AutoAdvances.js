@@ -17,7 +17,7 @@ export default (Component, propName, upperBoundPropName) =>
     };
 
     static defaultProps = {
-      autoAdvanceDelay: 10e3,
+      autoAdvanceDelay: 1000,
     };
 
     componentDidMount() {
