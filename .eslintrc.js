@@ -1,25 +1,30 @@
 module.exports = {
   plugins: ['react'],
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:storybook/recommended', 'plugin:storybook/recommended', 'plugin:storybook/recommended'],
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2021,
-    sourceType: 'module', // 1
+    sourceType: 'module',
+    // 1
     ecmaFeatures: {
-      jsx: true,
-    },
+      jsx: true
+    }
   },
   env: {
-    node: true,
+    node: true
   },
   rules: {
-    quotes: ['error', 'single', { avoidEscape: true }],
+    quotes: ['error', 'single', {
+      avoidEscape: true
+    }],
     'comma-dangle': ['error', 'always-multiline'],
-    'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+    'no-unused-vars': ['error', {
+      varsIgnorePattern: '^_'
+    }]
   },
   settings: {
     react: {
-      version: '16.4.2',
-    },
-  },
+      version: '16.4.2'
+    }
+  }
 };
